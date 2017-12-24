@@ -1,7 +1,7 @@
 # | Weather Data - Automate Crawl - Graph Analytics - Insights |
 
 
-## This Automation Of Weather Data Is Useful For Following People
+## This Automation Of Weather Data For Analytics And Insights Is Useful For Following People
 
 *  Students
 *  Novice Developer
@@ -10,7 +10,7 @@
 *  Automation Learner
 *  Crawler Learner
 
-## What This Sample BOT Covers For You
+## What This Sample Covers For You
 
 * Crawling Of Page
 * Scraping Of Page Data
