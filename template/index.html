@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<head>
+	
+	<title>Weather Data - Automate Crawl - Graph Analytics - Insights</title>
+    
+    {% load static from staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</head>
+
+<body>
+
+<style type="text/css">
+.loader{
+  position:fixed;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;
+  background-color:#666;
+  background-image:url('{% static 'img/loader.gif' %}');
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  opacity: 0.8;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+</style>
+
+<div id="loader" class="loader"></div>
+
+<center>
+
+{% if index %}
+
+<br><br><br>
+
+<h4>Weather Data - Automate Crawl - Graph Analytics - Insights</h4>
+
+<br>
+
+<h5>| Click The Below Button To Run The Process |</h5>
+
+<br><br>
+<h6><div class="alert alert-info">Note : " To View The Background Console Messages During The Run : Check Out Console Window Of Django Server "</div></h6>
+
+<br>
+
+<div class="alert alert-success" id="msg" role="alert" style="display:none;" ></div>
+
+<a href="#" id="submit" class="btn btn-primary btn-lg" value="Run" name='submit' >Run Me</a>
+<br><br>
+
+<a href='/?view=graph' class="btn btn-success btn-lg">View Graphs</a>
+
+{% endif %}
+
+
+{% if graph %}
+
+<br><br><br><br>
+<h3>| Click The Links To View Graphs |</h3>
+
+<table cellpadding="0" cellspacing="0" class="table" summary="Year ordered statistics">
+ <tbody>
+  <tr>
+   <th>Region</th>
+   <th>Max Temp</th>
+   <th>Min Temp</th>
+   <th>Mean Temp</th>
+   <th>Sunshine</th>
+   <th>Rainfall</th>
+  </tr>
+  <tr>
+   <td><strong>UK</strong></td>
+   <td><a href="/graph?country=UK&tag_code=UK_TMAX"  >View Graph</a></td>
+   <td><a href="/graph?country=UK&tag_code=UK_TMIN"  >View Graph</a></td>
+   <td><a href="/graph?country=UK&tag_code=UK_TMEAN"  >View Graph</a></td>
+   <td><a href="/graph?country=UK&tag_code=UK_SUNSHINE"  >View Graph</a></td>
+   <td><a href="/graph?country=UK&tag_code=UK_RAINFALL"  >View Graph</a></td>
+  </tr>
+  <tr>
+   <td><strong>England</strong></td>
+   <td><a href="/graph?country=England&tag_code=England_TMAX"  >View Graph</a></td>
+   <td><a href="/graph?country=England&tag_code=England_TMIN"  >View Graph</a></td>
+   <td><a href="/graph?country=England&tag_code=England_TMEAN"  >View Graph</a></td>
+   <td><a href="/graph?country=England&tag_code=England_SUNSHINE"  >View Graph</a></td>
+   <td><a href="/graph?country=England&tag_code=England_RAINFALL"  >View Graph</a></td>
+  </tr>
+  <tr>
+   <td><strong>Wales</strong></td>
+   <td><a href="/graph?country=Wales&tag_code=Wales_TMAX"  >View Graph</a></td>
+   <td><a href="/graph?country=Wales&tag_code=Wales_TMIN"  >View Graph</a></td>
+   <td><a href="/graph?country=Wales&tag_code=Wales_TMEAN"  >View Graph</a></td>
+   <td><a href="/graph?country=Wales&tag_code=Wales_SUNSHINE"  >View Graph</a></td>
+   <td><a href="/graph?country=Wales&tag_code=Wales_RAINFALL"  >View Graph</a></td>
+  </tr>
+  <tr>
+   <td><strong>Scotland</strong></td>
+   <td><a href="/graph?country=Scotland&tag_code=Scotland_TMAX"  >View Graph</a></td>
+   <td><a href="/graph?country=Scotland&tag_code=Scotland_TMIN"  >View Graph</a></td>
+   <td><a href="/graph?country=Scotland&tag_code=Scotland_TMEAN"  >View Graph</a></td>
+   <td><a href="/graph?country=Scotland&tag_code=Scotland_SUNSHINE"  >View Graph</a></td>
+   <td><a href="/graph?country=Scotland&tag_code=Scotland_RAINFALL"  >View Graph</a></td>
+  </tr>
+ </tbody>
+</table>
+
+<br>
+
+    <a href='/' class="btn btn-primary btn-sm">Go Back</a>
+
+{% endif %}
+
+</center>
+
+</body>
+
+<script type="text/javascript">
+
+    $(window).on('load',function(){$('#loader').fadeOut("slow");});
+
+     $("#submit").click(function(){ 
+        $('#loader').fadeIn("slow");
+        $.ajax({ 
+        url: "/run",
+        method: "POST",
+        data:{'submit':'run'},
+        success:function(result){
+        // console.log(result);
+        $('#loader').fadeOut("slow");
+        $('#msg').html(result);
+        $('#msg').fadeIn("Fast");
+        $('#msg').fadeOut(13000);
+        },
+        error:function(err){console.log(err.statusText);alert(err.statusText);}
+        })
+     })
+      
+</script>
+
+</html>

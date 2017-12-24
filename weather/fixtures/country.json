@@ -1,0 +1,35 @@
+[
+  {
+    "model": "weather.country",
+    "pk": 1,
+    "fields": {
+      "country": "UK",
+      "country_code": 1
+    }
+  },
+  {
+    "model": "weather.country",
+    "pk": 2,
+    "fields": {
+      "country": "England",
+      "country_code": 2
+    }
+  },
+  {
+    "model": "weather.country",
+    "pk": 3,
+    "fields": {
+      "country": "Wales",
+      "country_code": 3
+    }
+  },
+  {
+    "model": "weather.country",
+    "pk": 4,
+    "fields": {
+      "country": "Scotland",
+      "country_code": 4
+    }
+  }
+  
+]

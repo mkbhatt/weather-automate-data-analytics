@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<head>
+	
+	<title>Sample Graph View For {{graph_name}}</title>
+    
+    {% load static from staticfiles %}
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chart.min.js' %}"></script>
+
+     <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+
+</head>
+
+<body>
+
+<style type="text/css">
+.loader{
+  position:fixed;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;
+  background-color:#666;
+  background-image:url('{% static 'img/loader.gif' %}');
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  opacity: 0.8;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+</style>
+
+<div id="loader" class="loader"></div>
+
+<center>
+ <br>
+ <h5>| Graph View For "{{graph_name}}" | Scale X : "{{scale.0}}"" | Scale Y : "{{scale.1}}" |</h5>
+ <br>
+ <div>| Seasons: Winter=Dec-Feb, Spring=Mar-May, Summer=June-Aug, Autumn=Sept-Nov |</div>
+
+ <div id="container" style="width: 75%;">
+       <canvas id="canvas"></canvas>
+  </div>
+
+    <script>
+    	
+    	$(window).on('load', function () {
+        $('#loader').fadeOut("slow");
+      });
+
+
+        var color = Chart.helpers.color;
+        var barChartData = {
+            labels: [{% if data %}
+
+					{% for val in data %}
+					"{{ val.year }}",
+					{% endfor %}
+
+					{% endif %}],
+            datasets: [{
+                label: '{{graph_name}} | Summer | {{scale.1}}',
+                backgroundColor: color(window.chartColors.red).alpha(0.6).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: [
+                    {% if data %}
+
+					{% for val in data %}
+					"{{ val.summer }}",
+					{% endfor %}
+
+					{% endif %}
+                ]
+            }, {
+                label: '{{graph_name}} | Winter | {{scale.1}}',
+                backgroundColor: color(window.chartColors.purple).alpha(0.6).rgbString(),
+                borderColor: window.chartColors.purple,
+                borderWidth: 1,
+                data: [
+                   {% if data %}
+
+					{% for val in data %}
+					"{{ val.winter }}",
+					{% endfor %}
+
+					{% endif %}
+                ]
+            }, {
+                label: '{{graph_name}} | Spring | {{scale.1}}',
+                backgroundColor: color(window.chartColors.green).alpha(0.6).rgbString(),
+                borderColor: window.chartColors.green,
+                borderWidth: 1,
+                data: [
+                   {% if data %}
+
+					{% for val in data %}
+					"{{ val.spring }}",
+					{% endfor %}
+
+					{% endif %}
+                ]
+            }, {
+                label: '{{graph_name}} | Autumn | {{scale.1}}',
+                backgroundColor: color(window.chartColors.orange).alpha(0.6).rgbString(),
+                borderColor: window.chartColors.orange,
+                borderWidth: 1,
+                data: [
+                   {% if data %}
+
+					{% for val in data %}
+					"{{ val.autumn }}",
+					{% endfor %}
+
+					{% endif %}
+                ]
+            }, {
+                label: '{{graph_name}} | Annual | {{scale.1}}',
+                backgroundColor: color(window.chartColors.black).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.black,
+                borderWidth: 1,
+                data: [
+                   {% if data %}
+
+					{% for val in data %}
+					"{{ val.annual }}",
+					{% endfor %}
+
+					{% endif %}
+                ]
+            }]
+
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Showing Last 20 Records Increase Limit From Views To Display More Data | Hover On Bars To Learn More'
+                    }
+                }
+            });
+
+        };
+
+       
+    </script>
+
+    <br>
+
+    <a href='/?view=graph' class="btn btn-primary btn-sm">Go Back</a>
+
+</center>	
+
+</body>
+
+</html>
